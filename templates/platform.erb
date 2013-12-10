@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+    <style type="text/css">
+      .info { background-color: #fff; }
+      .error { background-color: rgb(242, 222, 222); }
+      .warning { background-color: rgb(252, 248, 227); }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+    <h1>platform.log</h1>
+    <div class="list-group">
+      <% log.emit do |entry| %>
+        <div href="#" class="list-group-item <%=entry.severity%>">
+          <p class="list-group-item-heading expandable">
+          <span class="badge"><%=timeago Time.parse(entry.timestamp.to_s)%></span>
+          <small><%=h entry.title%></small>
+            <% unless entry.messages.empty? %>
+              <span class="pull-right caret"></span>
+            <% end %>
+          </p>
+          <% unless entry.messages.empty? %>
+            <pre class="list-group-item-text hidden"><code><%=entry.messages.map { |m| h(m) }.join("\n")%></code></pre>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script>
+    $(document).ready(function(){
+      $("p.expandable").click(function(ev) {
+        $(this).parent().children("pre").toggleClass('hidden');
+      })
+    })
+    </script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
